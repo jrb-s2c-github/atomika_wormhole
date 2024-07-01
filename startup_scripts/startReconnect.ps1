@@ -6,7 +6,6 @@
 [bool]$HasBeenStarted = $false
 DO
 {
- #Start-Sleep -Seconds 5
  [Microsoft.HyperV.PowerShell.VMNetworkAdapterBase]$IPAddress = Get-VM -Name $MachineName | select -ExpandProperty NetworkAdapters 
  $IP = $IPAddress.IPAddresses[0]
 

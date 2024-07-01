@@ -41,3 +41,4 @@ installed. One can also get a shell by connecting from the Hyper-V manager appli
 * Tune size of Windows VM
 * Switch on compression of iso images?
 * Provide hash to compare iso against
+* Report failure in PowerShell scripts instead of failing silently, forcing one to check on HyperV manager
