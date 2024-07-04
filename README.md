@@ -1,15 +1,38 @@
-# atomika_wormhole
+# Atomika Wormhole
+
+```
+                    .   .xXXXX+.   .
+               .   ..   xXXXX+.-   ..   .   
+         .   ..  ... ..xXXXX+. --.. ...  ..   .
+     .   ..  ... .....xXXXX+.  -.-..... ...  ..   .
+   .   ..  ... ......xXXXX+.  . .--...... ...  ..   . 
+  .   ..  ... ......xXXXX+.    -.- -...... ...  ..   .
+ .   ..  ... ......xXXXX+.   .-+-.-.-...... ...  ..   .
+ .   ..  ... .....xXXXX+. . --xx+.-.--..... ...  ..   .
+.   ..  ... .....xXXXX+. - .-xxxx+- .-- .... ...  ..   .
+ .   ..  ... ...xXXXX+.  -.-xxxxxx+ .---... ...  ..   .
+ .   ..  ... ..xXXXX+. .---..xxxxxx+-..--.. ...  ..   .
+  .   ..  ... xXXXX+. . --....xxxxxx+  -.- ...  ..   .
+   .   ..  ..xXXXX+. . .-......xxxxxx+-. --..  ..   .
+     .   .. xXXXXXXXXXXXXXXXXXXXxxxxxx+. .-- ..   .
+         . xXXXXXXXXXXXXXXXXXXXXXxxxxxx+.  -- .
+           xxxxxxxxxxxxxxxxxxxxxxxxxxxxx+.--
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx+-   Ojosh!ro
+            
+MIT License, Copyright (c) 2024 S2C Consulting (PtyLtd ZA)
+```
+
 Atomika wormhole automates the preparation of machines for use as Kubernetes or Ansible Control nodes. The primary 
 vehicle is an ISO image of Ubuntu 22 that 
 * boots up without user input;
 * is minimalistic and
 * is pre-installed with Ansible.
 
-As such it supports the corresponding version [jrb-s2c-github/atomika](https://github.com/jrb-s2c-github/atomika)
+As such it supports the corresponding version of [jrb-s2c-github/atomika](https://github.com/jrb-s2c-github/atomika)
 
 ## Windows
-This allows a PowerShell script to start instances of Ubuntu 22 Windows as Virtual Machines that does not require human 
-interaction with the Windows Hypervizor HyperV. This script depends on [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview)
+This allows a PowerShell script to start instances of Ubuntu 22 Windows as Virtual Machines that do not require human 
+interaction  but still runs directly on the Windows Hypervizor (HyperV)!!! This script depends on [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview)
 to drop one directly into a ssh shell on the new virtual machine.
 
 ### Howto create new Virtual Machine
@@ -41,4 +64,5 @@ installed. One can also get a shell by connecting from the Hyper-V manager appli
 * Tune size of Windows VM
 * Switch on compression of iso images?
 * Provide hash to compare iso against
-* Report failure in PowerShell scripts instead of failing silently, forcing one to check on HyperV manager
+* Report failure in PowerShell scripts when not enough ram available
+* Test for existence of VM before doing startReconnect.sh
