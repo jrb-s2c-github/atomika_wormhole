@@ -1,11 +1,12 @@
 ﻿Param (
-        [Parameter(Mandatory=$true)][string]$MachineName 
+        [Parameter(Mandatory=$true)][string]$MachineName,
+        [Parameter(Mandatory=$true)][string]$ImagePath
 )
 
 
 New-VM -Name $MachineName -MemoryStartupBytes 4GB -NewVHDPath $MachineName+'.vhdx' -NewVHDSizeBytes 40GB -SwitchName 'Default Switch'
 Set-VM -Name $MachineName -ProcessorCount 8 -StaticMemory 
-Add-VMDvdDrive -VMName "$MachineName" -Path ubuntu-22.04-atomika-autoinstall_V5_1.iso
+Add-VMDvdDrive -VMName "$MachineName" -Path "$ImagePath"
 Start-VM -Name $MachineName 
 
 $IP = 'NOT_SET'

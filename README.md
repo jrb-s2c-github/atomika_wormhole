@@ -1,6 +1,7 @@
 # Atomika Wormhole
 
 ```
+      Enter the wormhole into Atomika Kubernetes
                        ______
                       /\     \
                      /  \     \
@@ -28,52 +29,76 @@
 \    /     / /     / /     / /     / /     / /     /
  \  /     / /     / /     / /     / /     / /     /
   \/_____/\/_____/\/_____/\/_____/\/_____/\/_____/
-   MIT License, Copyright (c) 2024 S2C Consulting (PtyLtd ZA)
+ MIT License, Copyright (c) 2024 S2C Consulting (PtyLtd ZA)
 ```
 
 Atomika wormhole automates the preparation of machines for use as Kubernetes or Ansible Control nodes. The primary 
-vehicle is an ISO image of Ubuntu 22 that 
+vehicle are ISO images of Ubuntu 22 that 
 * boots up without user input;
 * is minimalistic and
 * is pre-installed with Ansible.
 
-As such it supports the corresponding version of [jrb-s2c-github/atomika](https://github.com/jrb-s2c-github/atomika)
+There are two images:
+* The bare image augments normal Ubuntu22 server with Git and Ansible
+* The Atomika image build on bare by preparing itself to run as a Kubernetes node cluster during first boot. See the 
+k8s_init.yml Ansible playboork of the [Atomika](https://github.com/jrb-s2c-github/atomika) project for more details on this. 
+As such its versioning follows that of [jrb-s2c-github/atomika](https://github.com/jrb-s2c-github/atomika).
+
+The images are opinionated in that it boots:
+* Ubuntu Server minimal (No GUI and extended packages);
+* UTC;
+* US English keyboard;
+* en_US.UTF-8 locale;
+* one partition hard drive filled to maximum;
+* one sudo user called ansible with *unsecured (change this should hardening be required)* public/private key available at 
+GitHub root;
+* sudo pwd for ansible user of 'atmin' (*change this should hardening be required)* 
+* hostname of wormhole and
+* Git and Ansible
+* does not allow password authentication over SSH
+
+#### It is intended for local development and not for production use without custom hardening
 
 ## Windows
-This allows a PowerShell script to start instances of Ubuntu 22 Windows as Virtual Machines that do not require human 
-interaction  but still runs directly on the Windows Hypervizor (HyperV)!!! This script depends on [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview)
-to drop one directly into a ssh shell on the new virtual machine.
+A PowerShell script is provided that boots instances directly on the Windows Virtual Machines Hypervizor (Hyper-V). This 
+script, furthermore, drops one into a ssh shell on the new virtual machine without further human interaction. However, it 
+requires [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview) to be installed.
 
 ### Howto create new Virtual Machine
-* Git clone both atomika and atomika_wormhole into the same parent folder.  
-* Download the correct version of the image from [here](https://drive.google.com/drive/folders/1OY1rDy6MwYi0iXD159igjnJ7IOrBbJ1U)
+* Register the ansible private key located next to ansible.pub in root with security agent (ssh-agent on my machines)
+* Git clone atomika_wormhole.  
+* Download the required image from [here](https://drive.google.com/drive/folders/1OY1rDy6MwYi0iXD159igjnJ7IOrBbJ1U)
 into /startup_scripts. ISO versions follow that of the versions of Atomika they are prepared for.
-* Run /startup_scripts/liftoff.ps1 from a PowerShell prompt with administration privileges
-* Enter a name for the virtual machine that will be created when prompted
+* Run '*/startup_scripts/liftoff.ps1 $vm_name $patt_to_image_to_boot*' from a PowerShell prompt with administration privileges. 
+The location of the wormhome image can be completed using tabbing.
+* Enter a name for the virtual machine that will be created when prompted - Only when it have not been provided as $vm_name above
+* Enter the location of the wormhole image to boot - Only when it have not been provided as $patt_to_image_to_boot above
 * Wait to be dropped into a SSH shell on the VM.
 
 ### Howto reconnect or restart existing Virtual Machine
 Run /startup_scripts/startReconnect.ps1 in a PowerShell prompt with admin privileges. Since IP addresses might change 
-after restarts, there might be prompts requesting trust to be established again.
+after restarts, expect the prompt requesting trust to be established to appear again.
 
 #### Troubleshooting
 First of all check that the virtual machine is running by connecting to it directly from the Hyper-V manager application.
 
 Should it be running, but the SSH prompt did not appear:
-* Check that the atomika project has been cloned into the same parent folder as atomika_wormhole. Wormhole gets the SSH
-public key from atomika when estabishing the SSH tunnel.
 * Confirm that [OpenSSH]((https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview)) is 
 installed. One can also get a shell by connecting from the Hyper-V manager application directly.
+* Check that you loaded the private key of the ansible user
+
+### Tips and Tricks
+* do not be scared to change the creation parameters in liftoff.sh: amount of processors (-ProcessorCount 8), ram (-MemoryStartupBytes 4GB) 
+and virtual hard disk (-NewVHDSizeBytes 40GB), one can always revert back to the original in GitHub
+* Mess around in the settings/functionalities of Hyper-V manager. Google and be brave!
+* It is possible to change to create a Switch that uses a netword adaptor dedicated to HyperV and change over to it from
+the default switch in Hyper-V
 
 ## Outstanding
-* Test assumptions that HyperV is present and active on Windows 10&11 with Default Switch
-* Test assumptions that HyperV Default Switch is generated by OS
-* Should HyperV not be active by default, can it it be activated by a script? 
+* Test that HyperV is present and active on Windows 10&11 with Default Switch 
 * Script to install OpenSSH
-* Tune size of Windows VM
+* Tune size of Windows VM hard drive 
 * Switch on compression of iso images?
-* Provide hash to compare iso against
+* Provide hash to compare iso against?
 * Report failure in PowerShell scripts when not enough ram available
 * Test for existence of VM before doing startReconnect.sh
-
-# TODO describe auto-selections made 
