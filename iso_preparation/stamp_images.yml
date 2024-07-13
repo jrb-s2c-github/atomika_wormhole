@@ -20,18 +20,46 @@
         name: xorriso
         state: present
 
-    - name: Create working directory
-      ansible.builtin.file:
-        path:  source-files
-        state: present
-
     - name: Unpack ISO
-      ansible.builtin.command: "{{ 7z -y x base_iso_location -osource-files }}"
+      ansible.builtin.command: 
+        cmd: "7z -y x {{ base_iso_location }} -o/tmp/source-files"
 
+    - name: Copy boot partitions
+      ansible.builtin.copy:
+        src: /tmp/source-files/[BOOT]/
+        dest: /tmp/BOOT
+  
+    - name: Delete working boot partitions
+      ansible.builtin.file:
+        path:  /tmp/source-files/[BOOT]
+        state: absent
+  
     - name: Copy files for Ubuntu Bare
       ansible.builtin.copy:
-        src: iso_preparation/bare/source-files/bare_ubuntu
-        dest: source-files/
+        src: bare/source-files/bare_ubuntu
+        dest: /tmp/source-files/
 
-    - name: Stamp new image
-      ansible.builtin.command: xorriso -as mkisofs -r   -V 'Ubuntu 22.04 LTS AUTO (EFIBIOS)'   -o ../ubuntu-22.04-wormhole-autoinstall-bare.iso   --grub2-mbr ../BOOT/1-Boot-NoEmul.img -partition_offset 16   --mbr-force-bootable   -append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b ../BOOT/2-Boot-NoEmul.img   -appended_part_as_gpt   -iso_mbr_part_type a2a0d0ebe5b9334487c068b6b72699c7   -c '/boot.catalog'   -b '/boot/grub/i386-pc/eltorito.img'     -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info   -eltorito-alt-boot   -e '--interval:appended_partition_2:::'   -no-emul-boot .
+    - name: Copy boot config for Ubuntu bare
+      ansible.builtin.copy:
+        src: bare/source-files/boot/grub/grub.cfg
+        dest: /tmp/source-files/boot/grub/grub.cfg
+
+    - name: Stamp bare image
+      ansible.builtin.command: 
+        cmd: xorriso -as mkisofs -r   -V 'Ubuntu 22.04 LTS AUTO (EFIBIOS)'   -o ../ubuntu-22.04-wormhole-autoinstall-bare.iso   --grub2-mbr ../BOOT/1-Boot-NoEmul.img -partition_offset 16   --mbr-force-bootable   -append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b ../BOOT/2-Boot-NoEmul.img   -appended_part_as_gpt   -iso_mbr_part_type a2a0d0ebe5b9334487c068b6b72699c7   -c '/boot.catalog'   -b '/boot/grub/i386-pc/eltorito.img'     -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info   -eltorito-alt-boot   -e '--interval:appended_partition_2:::'   -no-emul-boot .
+        chdir: /tmp/source-files
+
+    - name: Copy files for Ubuntu Atomika
+      ansible.builtin.copy:
+        src: atomika/source-files/atomika_ubuntu
+        dest: /tmp/source-files/
+
+    - name: Copy boot config for Ubuntu Atomika
+      ansible.builtin.copy:
+        src: atomika/source-files/boot/grub/grub.cfg
+        dest: /tmp/source-files/boot/grub/grub.cfg
+
+    - name: Stamp Atomika image
+      ansible.builtin.command:
+        cmd: xorriso -as mkisofs -r   -V 'Ubuntu 22.04 LTS AUTO (EFIBIOS)'   -o ../ubuntu-22.04-wormhole-autoinstall-atomika.iso   --grub2-mbr ../BOOT/1-Boot-NoEmul.img -partition_offset 16   --mbr-force-bootable -append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b ../BOOT/2-Boot-NoEmul.img   -appended_part_as_gpt   -iso_mbr_part_type a2a0d0ebe5b9334487c068b6b72699c7   -c '/boot.catalog'   -b '/boot/grub/i386-pc/eltorito.img'     -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info   -eltorito-alt-boot   -e '--interval:appended_partition_2:::'   -no-emul-boot .
+        chdir: /tmp/source-files        
