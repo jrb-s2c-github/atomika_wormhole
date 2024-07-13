@@ -1,25 +1,34 @@
 # Atomika Wormhole
 
 ```
-                    .   .xXXXX+.   .
-               .   ..   xXXXX+.-   ..   .   
-         .   ..  ... ..xXXXX+. --.. ...  ..   .
-     .   ..  ... .....xXXXX+.  -.-..... ...  ..   .
-   .   ..  ... ......xXXXX+.  . .--...... ...  ..   . 
-  .   ..  ... ......xXXXX+.    -.- -...... ...  ..   .
- .   ..  ... ......xXXXX+.   .-+-.-.-...... ...  ..   .
- .   ..  ... .....xXXXX+. . --xx+.-.--..... ...  ..   .
-.   ..  ... .....xXXXX+. - .-xxxx+- .-- .... ...  ..   .
- .   ..  ... ...xXXXX+.  -.-xxxxxx+ .---... ...  ..   .
- .   ..  ... ..xXXXX+. .---..xxxxxx+-..--.. ...  ..   .
-  .   ..  ... xXXXX+. . --....xxxxxx+  -.- ...  ..   .
-   .   ..  ..xXXXX+. . .-......xxxxxx+-. --..  ..   .
-     .   .. xXXXXXXXXXXXXXXXXXXXxxxxxx+. .-- ..   .
-         . xXXXXXXXXXXXXXXXXXXXXXxxxxxx+.  -- .
-           xxxxxxxxxxxxxxxxxxxxxxxxxxxxx+.--
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx+-   Ojosh!ro
-            
-MIT License, Copyright (c) 2024 S2C Consulting (PtyLtd ZA)
+                       ______
+                      /\     \
+                     /  \     \
+                    /    \_____\
+                   _\    / ____/_
+                  /\ \  / /\     \
+                 /  \ \/_/  \     \
+                /    \__/    \_____\
+               _\    /  \    / ____/_
+              /\ \  /    \  / /\     \
+             /  \ \/_____/\/_/  \     \
+            /    \_____\    /    \_____\
+           _\    /     /    \    / ____/_
+          /\ \  /     /      \  / /\     \
+         /  \ \/_____/        \/_/  \     \
+        /    \_____\            /    \_____\
+       _\    /     /            \    / ____/_
+      /\ \  /     /              \  / /\     \
+     /  \ \/_____/                \/_/  \     \ -axiac
+    /    \_____\                    /    \_____\
+    \    /     /_  ______  ______  _\____/ ____/_
+  /\ \  /     /  \/\     \/\     \/\     \/\     \
+ /  \ \/_____/    \ \     \ \     \ \     \ \     \
+/    \_____\ \_____\ \_____\ \_____\ \_____\ \_____\
+\    /     / /     / /     / /     / /     / /     /
+ \  /     / /     / /     / /     / /     / /     /
+  \/_____/\/_____/\/_____/\/_____/\/_____/\/_____/
+   MIT License, Copyright (c) 2021 S2C Consulting (PtyLtd ZA)
 ```
 
 Atomika wormhole automates the preparation of machines for use as Kubernetes or Ansible Control nodes. The primary 
@@ -66,3 +75,5 @@ installed. One can also get a shell by connecting from the Hyper-V manager appli
 * Provide hash to compare iso against
 * Report failure in PowerShell scripts when not enough ram available
 * Test for existence of VM before doing startReconnect.sh
+
+# TODO describe auto-selections made 
