@@ -28,7 +28,7 @@
 \    /     / /     / /     / /     / /     / /     /
  \  /     / /     / /     / /     / /     / /     /
   \/_____/\/_____/\/_____/\/_____/\/_____/\/_____/
-   MIT License, Copyright (c) 2021 S2C Consulting (PtyLtd ZA)
+   MIT License, Copyright (c) 2024 S2C Consulting (PtyLtd ZA)
 ```
 
 Atomika wormhole automates the preparation of machines for use as Kubernetes or Ansible Control nodes. The primary 

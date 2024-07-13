@@ -3,8 +3,8 @@
 )
 
 
-New-VM -Name $MachineName -MemoryStartupBytes 4GB -NewVHDPath $MachineName+'.vhdx' -NewVHDSizeBytes 20GB -SwitchName 'Default Switch' 
-Set-VM -Name $MachineName -ProcessorCount 4 -StaticMemory 
+New-VM -Name $MachineName -MemoryStartupBytes 4GB -NewVHDPath $MachineName+'.vhdx' -NewVHDSizeBytes 40GB -SwitchName 'Default Switch'
+Set-VM -Name $MachineName -ProcessorCount 8 -StaticMemory 
 Add-VMDvdDrive -VMName "$MachineName" -Path ubuntu-22.04-atomika-autoinstall_V5_1.iso
 Start-VM -Name $MachineName 
 
@@ -19,4 +19,5 @@ DO
 Set-Service   ssh-agent -StartupType Automatic
 Start-Service ssh-agent
 Start-Process ssh-add ..\..\ansible
+
 Start-Process ssh -ArgumentList ('ansible@' + $IP)

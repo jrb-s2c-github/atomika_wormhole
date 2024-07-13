@@ -1,0 +1,37 @@
+# stamp_images.yml
+
+- hosts: localhost
+  connection: local
+  become: true
+  vars_prompt:
+    - name: "base_iso_location"
+      prompt: "Enter the path to the base image"
+      private: no
+      default: /tmp/ubuntu-22.04.4-live-server-amd64.iso
+
+  tasks:
+    - name: Install 7Zip
+      ansible.builtin.apt:
+        name: p7zip-full
+        state: present
+
+    - name: Install Xorriso
+      ansible.builtin.apt:
+        name: xorriso
+        state: present
+
+    - name: Create working directory
+      ansible.builtin.file:
+        path:  source-files
+        state: present
+
+    - name: Unpack ISO
+      ansible.builtin.command: "{{ 7z -y x base_iso_location -osource-files }}"
+
+    - name: Copy files for Ubuntu Bare
+      ansible.builtin.copy:
+        src: iso_preparation/bare/source-files/bare_ubuntu
+        dest: source-files/
+
+    - name: Stamp new image
+      ansible.builtin.command: xorriso -as mkisofs -r   -V 'Ubuntu 22.04 LTS AUTO (EFIBIOS)'   -o ../ubuntu-22.04-wormhole-autoinstall-bare.iso   --grub2-mbr ../BOOT/1-Boot-NoEmul.img -partition_offset 16   --mbr-force-bootable   -append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b ../BOOT/2-Boot-NoEmul.img   -appended_part_as_gpt   -iso_mbr_part_type a2a0d0ebe5b9334487c068b6b72699c7   -c '/boot.catalog'   -b '/boot/grub/i386-pc/eltorito.img'     -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info   -eltorito-alt-boot   -e '--interval:appended_partition_2:::'   -no-emul-boot .

@@ -1,4 +1,4 @@
-#cloud-config, password is for user atmin and public key for ansible key pair checked into jrb-s2c-github/atomika
+#cloud-config
 autoinstall:
   apt:
     disable_components: []
@@ -12,10 +12,15 @@ autoinstall:
     install: false
   drivers:
     install: false
+  apt:
+    sources:
+      ignored1:  # This is here to get the yaml formatting right when adding a ppa
+        source: ppa:ansible/ansible
   packages:
-    - ansible
     - git
     - linux-azure
+    - ansible
+    - bash-completion
   identity:
     hostname: wormhole
     password: $6$3LDS/DN7e/bAeumf$dhUyxSlmgQO7OU8ktmdzOl6wtEawEJ2lGe6vaKTEhxr48xi6w6Ad9F.xEsxKoqUhxpFAKNIUK.7Y8kW.FMFvD/
@@ -39,11 +44,10 @@ autoinstall:
     search_drivers: false
   ssh:
     allow-pw: false
-    # content of ansible.pub that is checked into root of jrb-s2s-github/atomika, goes with private key called ansible also checked in there
     authorized-keys:
       - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBACyyc0kvd4u+tcSLxP5q0lDceCABW4dQBEVa/E/guUXqkYT/jZsDGWJE6/aIQp2QlOjBVD3qPgvyoPsYRmh4l+j9QE/hMDTx4SLSuGVbAjV+dRCM4GwKQZgHBxt01IrO5bMo98uIGBonUrdMGY8YQLwrFxmJYjDVVTj//FoI2wxXlHUcg== root@dquick
     install-server: true
-  #iinteractive-sections:  # Install groups listed here will wait for user input
+  #interactive-sections:  # Install groups listed here will wait for user input
   #  - storage
   #  - shutdown
   storage:
@@ -51,9 +55,5 @@ autoinstall:
       name: lvm
       match:
         size: largest
-  updates: security
   version: 1
-  late-commands:
-    - git clone https://github.com/jrb-s2c-github/atomika.git
-    #- cd atomika
-    #- git checkout V5_1
+  updates: security

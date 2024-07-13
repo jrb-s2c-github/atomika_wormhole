@@ -1,0 +1,67 @@
+#cloud-config
+autoinstall:
+  apt:
+    disable_components: []
+    fallback: abort
+    geoip: true
+    preserve_sources_list: false
+    primary:
+      - arches: [default]
+        uri: http://us.archive.ubuntu.com/ubuntu/
+  codecs:
+    install: false
+  drivers:
+    install: false
+  apt:
+    sources:
+      ignored1:  # This is here to get the yaml formatting right when adding a ppa
+        source: ppa:ansible/ansible
+  packages:
+    - git
+    - linux-azure
+    - ansible
+    - python3-pip
+    - bash-completion
+  identity:
+    hostname: wormhole
+    password: $6$3LDS/DN7e/bAeumf$dhUyxSlmgQO7OU8ktmdzOl6wtEawEJ2lGe6vaKTEhxr48xi6w6Ad9F.xEsxKoqUhxpFAKNIUK.7Y8kW.FMFvD/
+    realname: ansible
+    username: ansible
+  keyboard:
+    layout: us
+    toggle: null
+    variant: ''
+  timezone: UTC
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      eth0:
+        dhcp4: true
+    version: 2
+  oem:
+    install: auto
+  source:
+    id: ubuntu-server-minimal
+    search_drivers: false
+  ssh:
+    allow-pw: false
+    authorized-keys:
+      - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBACyyc0kvd4u+tcSLxP5q0lDceCABW4dQBEVa/E/guUXqkYT/jZsDGWJE6/aIQp2QlOjBVD3qPgvyoPsYRmh4l+j9QE/hMDTx4SLSuGVbAjV+dRCM4GwKQZgHBxt01IrO5bMo98uIGBonUrdMGY8YQLwrFxmJYjDVVTj//FoI2wxXlHUcg== root@dquick
+    install-server: true
+  #interactive-sections:  # Install groups listed here will wait for user input
+  #  - storage
+  #  - shutdown
+  storage:
+    layout:
+      name: lvm
+      match:
+        size: largest
+  version: 1
+  updates: security
+  user-data:
+    runcmd:
+      - git clone https://github.com/jrb-s2c-github/atomika.git --branch V5_1_Wormhole --single-branch ~ansible/atomika
+      - sudo pip3 install kubernetes
+      - ansible-galaxy collection install community.kubernetes
+      - ansible-playbook ~ansible/atomika/atomika/k8s_init.yml -i ~ansible/atomika/atomika/inventory/local_inventory.yml
+
