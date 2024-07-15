@@ -64,6 +64,8 @@ A PowerShell script is provided that boots instances directly on the Windows Vir
 script, furthermore, drops one into a ssh shell on the new virtual machine without further human interaction. However, it 
 requires [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview) to be installed.
 
+See links to documentation on Hyper-V lower down.
+
 ### Howto create new Virtual Machine
 * Register the ansible private key located next to ansible.pub in root with security agent (ssh-agent on my machines)
 * Git clone atomika_wormhole.  
@@ -93,6 +95,16 @@ and virtual hard disk (-NewVHDSizeBytes 40GB), one can always revert back to the
 * Mess around in the settings/functionalities of Hyper-V manager. Google and be brave!
 * It is possible to change to create a Switch that uses a netword adaptor dedicated to HyperV and change over to it from
 the default switch in Hyper-V
+
+### Hyper-V Documentation
+* [Install Hyper-V on Windows 10](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v)
+* [Start Hyper-V Manager and create a VM manually](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/create-virtual-machine)
+* [How to Install and Configure Hyper-V](https://www.dummies.com/article/technology/computers/macs/general-macs/how-to-install-and-configure-hyper-v-264394/)
+* [A Practical Guide to Hyper-V Virtual Switch Configuration](https://getlabsdone.com/how-to-configure-hyper-v-virtual-switches/)
+* [Configure VM memory in Hyper-V](https://www.bdrsuite.com/blog/configure-dynamic-memory-in-hyper-v-with-best-practices/)
+* [Hyper-V Virtual CPUs Explained](https://www.altaro.com/hyper-v/hyper-v-virtual-cpus-explained/)
+* My settings to dedicate a network adaptor for use by VM's:
+![Dedicated NIC](README_IMAGES/vs_dedicated_nic..png)
 
 ## Outstanding
 * Test that HyperV is present and active on Windows 10&11 with Default Switch 
