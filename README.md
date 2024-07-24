@@ -93,8 +93,8 @@ installed. One can also get a shell by connecting from the Hyper-V manager appli
 * do not be scared to change the creation parameters in liftoff.sh: amount of processors (-ProcessorCount 8), ram (-MemoryStartupBytes 4GB) 
 and virtual hard disk (-NewVHDSizeBytes 40GB), one can always revert back to the original in GitHub
 * Mess around in the settings/functionalities of Hyper-V manager. Google and be brave!
-* It is possible to change to create a Switch that uses a netword adaptor dedicated to HyperV and change over to it from
-the default switch in Hyper-V
+* It is possible to create and change to a switch that uses a network adaptor dedicated to HyperV, I find the advantage
+more stable IP addresses on my home network.
 
 ### Hyper-V Documentation
 * [Install Hyper-V on Windows 10](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v)
