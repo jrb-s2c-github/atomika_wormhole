@@ -60,7 +60,7 @@ autoinstall:
   updates: security
   user-data:
     runcmd:
-      - git clone https://github.com/jrb-s2c-github/atomika.git --branch V5_1 --single-branch ~ansible/atomika
+      - git clone https://github.com/jrb-s2c-github/atomika.git --branch V5_2 --single-branch ~ansible/atomika
       - sudo pip3 install kubernetes
       - ansible-galaxy collection install community.kubernetes
       - ansible-playbook ~ansible/atomika/atomika/k8s_init.yml -i ~ansible/atomika/atomika/inventory/local_inventory.yml

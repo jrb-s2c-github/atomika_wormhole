@@ -59,6 +59,9 @@ GitHub root;
 
 #### It is intended for local development and not for production use without custom hardening
 
+## Dzone.com articles on Atomika Wormhole
+- [Ansible and the Pre-Container Arts](https://dzone.com/articles/ansible-and-the-pre-container-arts)
+
 ## Windows
 A PowerShell script is provided that boots instances directly on the Windows Virtual Machines Hypervizor (Hyper-V). This 
 script, furthermore, drops one into a ssh shell on the new virtual machine without further human interaction. However, it 
